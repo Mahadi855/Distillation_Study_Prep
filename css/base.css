@@ -1,0 +1,141 @@
+/* Distillation Viva Kit: base tokens + primitives shared by the app and every widget.
+   Layout concept: a lab notebook with a sidebar index; one readable column; teacher = gold, student = blue everywhere. */
+:root {
+  /* surfaces & ink (cool-tinted neutrals) */
+  --bg: #f1f5fc;
+  --surface: #ffffff;
+  --surface-2: #e8eef8;
+  --surface-3: #dbe4f3;
+  --fg: #0f1624;
+  --fg-2: #33405a;
+  --muted: #5d6a84;
+  --line: #cfd9ea;
+  --line-strong: #a9b8d2;
+  /* semantic roles */
+  --student: #2a78d6;        /* student model = blue */
+  --student-ink: #1c5cab;    /* blue text on light */
+  --student-soft: #d6e6fb;
+  --teacher: #c98500;        /* teacher model = gold */
+  --teacher-ink: #8a5a00;    /* gold text on light */
+  --teacher-soft: #fbecc8;
+  --accent: var(--student);
+  --accent-ink: var(--student-ink);
+  --focus: #6250d6;
+  /* chart series (validated: blue, gold, aqua, violet, orange) */
+  --c1: #2a78d6; --c2: #c98500; --c3: #1baf7a; --c4: #6250d6; --c5: #eb6834;
+  /* status */
+  --good: #0f8a3c; --good-soft: #d8f2e0;
+  --warn: #b26b00; --warn-soft: #fcebc9;
+  --bad: #c93434; --bad-soft: #f9dcdc;
+  /* equation term colours (used by KaTeX \htmlClass markers t1..t6) */
+  --t1: #2a78d6; --t2: #b26b00; --t3: #148a60; --t4: #6250d6; --t5: #d4541f; --t6: #b8336a;
+  /* type */
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Hind Siliguri", "Segoe UI", system-ui, sans-serif;
+  --font-bn: "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Vrinda", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --step--1: 0.8125rem; --step-0: 1rem; --step-1: 1.1875rem; --step-2: 1.4375rem; --step-3: 1.875rem; --step-4: 2.5rem;
+  --radius: 10px; --radius-sm: 6px;
+  --shadow: 0 1px 2px rgb(15 22 36 / 0.06), 0 4px 16px rgb(15 22 36 / 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c111c; --surface: #141c2b; --surface-2: #1b2537; --surface-3: #243049;
+    --fg: #e8eef8; --fg-2: #c3cde0; --muted: #94a2bc; --line: #2a3650; --line-strong: #3d4c6b;
+    --student: #3987e5; --student-ink: #8ab6f2; --student-soft: #1a2d4d;
+    --teacher: #c98500; --teacher-ink: #f2bf5e; --teacher-soft: #3a2a08;
+    --focus: #9085e9;
+    --c1: #3987e5; --c2: #c98500; --c3: #199e70; --c4: #9085e9; --c5: #d95926;
+    --good: #3fbf6a; --good-soft: #12301d; --warn: #f0a92e; --warn-soft: #3a2a08; --bad: #ef6b6b; --bad-soft: #3d1717;
+    --t1: #6ea7f0; --t2: #f0b23e; --t3: #3cc79a; --t4: #a99cf2; --t5: #f08a5d; --t6: #ee7ba8;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px rgb(0 0 0 / 0.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c111c; --surface: #141c2b; --surface-2: #1b2537; --surface-3: #243049;
+  --fg: #e8eef8; --fg-2: #c3cde0; --muted: #94a2bc; --line: #2a3650; --line-strong: #3d4c6b;
+  --student: #3987e5; --student-ink: #8ab6f2; --student-soft: #1a2d4d;
+  --teacher: #c98500; --teacher-ink: #f2bf5e; --teacher-soft: #3a2a08;
+  --focus: #9085e9;
+  --c1: #3987e5; --c2: #c98500; --c3: #199e70; --c4: #9085e9; --c5: #d95926;
+  --good: #3fbf6a; --good-soft: #12301d; --warn: #f0a92e; --warn-soft: #3a2a08; --bad: #ef6b6b; --bad-soft: #3d1717;
+  --t1: #6ea7f0; --t2: #f0b23e; --t3: #3cc79a; --t4: #a99cf2; --t5: #f08a5d; --t6: #ee7ba8;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px rgb(0 0 0 / 0.35);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+:lang(bn), .bn, .l-bn { font-family: var(--font-bn); line-height: 1.75; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; text-wrap: balance; margin: 0; }
+code, kbd, pre, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+a { color: var(--accent-ink); text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+[hidden] { display: none !important; }
+img, svg { max-width: 100%; }
+
+/* language visibility: <html data-lang="en|bn|both"> */
+html[data-lang="en"] .l-bn { display: none !important; }
+html[data-lang="bn"] .l-en { display: none !important; }
+
+/* ===== widget primitives (use these inside widgets) ===== */
+.widget {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-block: 14px;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.widget .w-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
+.widget .w-title { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); }
+.widget .w-kicker { font-size: var(--step--1); color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.widget .w-stage { min-width: 0; overflow-x: auto; }
+.widget .w-stage svg { display: block; width: 100%; height: auto; }
+.widget .w-controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.widget .w-control { display: grid; gap: 2px; min-width: 0; flex: 1 1 180px; }
+.widget .w-control label, .widget .w-label { font-size: var(--step--1); color: var(--fg-2); font-weight: 600; }
+.widget input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 28px; }
+.widget input[type="text"], .widget textarea, .widget select {
+  width: 100%; font: inherit; color: var(--fg); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 6px 8px;
+}
+.widget .w-btn {
+  font: inherit; font-size: var(--step--1); font-weight: 600; cursor: pointer;
+  color: var(--fg); background: var(--surface-2); border: 1px solid var(--line-strong);
+  border-radius: 999px; padding: 6px 14px; min-height: 34px;
+}
+.widget .w-btn:hover { background: var(--surface-3); }
+.widget .w-btn[aria-pressed="true"], .widget .w-btn.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.widget .w-readout { display: flex; flex-wrap: wrap; gap: 8px; font-variant-numeric: tabular-nums; }
+.widget .w-chip {
+  font-size: var(--step--1); background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+}
+.widget .w-chip b { font-family: var(--font-mono); font-weight: 600; }
+.widget .w-caption { font-size: var(--step--1); color: var(--muted); display: grid; gap: 2px; }
+.widget .w-note { font-size: var(--step--1); color: var(--fg-2); background: var(--surface-2); border-radius: var(--radius-sm); padding: 8px 10px; }
+.widget .teacher { color: var(--teacher-ink); }
+.widget .student { color: var(--student-ink); }
+/* SVG helpers: use currentColor or these classes, never literal colours */
+.widget svg text { fill: var(--fg-2); font-family: var(--font-body); font-size: 12px; }
+.widget svg .axis { stroke: var(--line-strong); }
+.widget svg .grid { stroke: var(--line); }
+.widget svg .f-student { fill: var(--student); }
+.widget svg .f-teacher { fill: var(--teacher); }
+.widget svg .s-student { stroke: var(--student); }
+.widget svg .s-teacher { stroke: var(--teacher); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
